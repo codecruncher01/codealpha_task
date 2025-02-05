@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Age Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function calculateAge() {
+            let birthdateInput = document.getElementById("birthdate").value;
+            if (!birthdateInput) return;
+            
+            let birthdate = new Date(birthdateInput);
+            let today = new Date();
+            
+            let years = today.getFullYear() - birthdate.getFullYear();
+            let months = today.getMonth() - birthdate.getMonth();
+            let days = today.getDate() - birthdate.getDate();
+            
+            if (days < 0) {
+                months--;
+                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            document.getElementById("result").innerHTML = `🎉 You are <span class='text-3xl font-bold'>${years}</span> years, <span class='text-2xl'>${months}</span> months, and <span class='text-2xl'>${days}</span> days old!`;
+            document.getElementById("tryAgain").style.display = "block";
+        }
+        
+        function resetCalculator() {
+            document.getElementById("birthdate").value = "";
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("tryAgain").style.display = "none";
+        }
+    </script>
+    <style>
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-purple-500 to-blue-500 min-h-screen flex items-center justify-center text-white">
+    <div class="bg-white text-black p-8 rounded-xl shadow-xl max-w-lg text-center container">
+        <h1 class="text-4xl font-bold mb-4">🚀 Epic Age Calculator</h1>
+        <p class="mb-4">Enter your birthdate to discover your exact age!</p>
+        <input type="date" id="birthdate" class="p-3 rounded-lg border-2 border-gray-300 focus:border-blue-500 w-full mb-4">
+        <button onclick="calculateAge()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-800 transition">Calculate Age</button>
+        <p id="result" class="text-xl font-semibold mt-6"></p>
+        <button id="tryAgain" onclick="resetCalculator()" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-800 transition mt-4 hidden">Try Again</button>
+    </div>
+</body>
+</html>
